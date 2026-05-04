@@ -21,31 +21,40 @@ import { useRef, useState, useEffect } from 'react';
 // --- Components ---
 
 const Header = () => {
+  const menuItems = [
+    { name: '맑음소개', id: 'about' },
+    { name: '여드름/모공', id: 'acne' },
+    { name: '기미/잡티', id: 'pigment' },
+    { name: '주름/탄력', id: 'lifting' },
+    { name: '의료진', id: 'doctor' },
+    { name: '오시는길', id: 'map' }
+  ];
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <a href="#hero" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="text-2xl font-serif font-bold tracking-tight text-clinic-gold">
-            순수<span className="text-clinic-dark">피부과</span>
+            맑음<span className="text-clinic-dark">피부과</span>
           </div>
-        </div>
+        </a>
         
-        <nav className="hidden md:flex items-center gap-8">
-          {['순수소개', '여드름/모공', '기미/잡티', '주름/탄력', '보톡스/필러'].map((item) => (
+        <nav className="hidden md:flex items-center gap-6">
+          {menuItems.map((item) => (
             <a 
-              key={item} 
-              href="#" 
+              key={item.id} 
+              href={`#${item.id}`} 
               className="text-sm font-medium hover:text-clinic-gold transition-colors"
             >
-              {item}
+              {item.name}
             </a>
           ))}
         </nav>
         
         <div className="flex items-center gap-4">
-          <button className="hidden lg:block text-xs font-bold border border-clinic-gold text-clinic-gold px-4 py-2 hover:bg-clinic-gold hover:text-white transition-all uppercase tracking-widest">
+          <a href="#map" className="hidden lg:block text-xs font-bold border border-clinic-gold text-clinic-gold px-4 py-2 hover:bg-clinic-gold hover:text-white transition-all uppercase tracking-widest">
             Appointment
-          </button>
+          </a>
           <button className="p-2 md:hidden">
             <Menu className="w-6 h-6" />
           </button>
@@ -86,7 +95,7 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+    <section id="hero" ref={containerRef} className="relative h-[90vh] flex items-center justify-center overflow-hidden pt-20">
       <motion.div 
         style={{ y }}
         className="absolute inset-0 z-0"
@@ -114,14 +123,14 @@ const Hero = () => {
         className="relative z-10 text-center px-4"
       >
         <p className="font-serif italic text-xl md:text-2xl text-white mb-4 tracking-wide shadow-sm">
-          Pure Skin, Pure Beauty
+          Clear Skin, Clear Beauty
         </p>
         <h1 className="text-5xl md:text-8xl font-bold text-white mb-8 tracking-tighter drop-shadow-md">
-          순수<span className="text-clinic-gold">피부과</span>
+          맑음<span className="text-clinic-gold">피부과</span>
         </h1>
         <div className="w-16 h-[2px] bg-clinic-gold mx-auto mb-8" />
         <p className="text-white/90 text-sm md:text-lg max-w-xl mx-auto font-light leading-relaxed mb-10">
-          본연의 아름다움을 찾아드리는 순수피부과에서<br />
+          본연의 아름다움을 찾아드리는 맑음피부과에서<br />
           당신의 빛나는 일상을 다시 만나보세요.
         </p>
         <button className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-white hover:text-clinic-dark transition-all duration-500">
@@ -145,7 +154,7 @@ const Hero = () => {
 
 const Intro = () => {
   return (
-    <section className="py-24 bg-clinic-beige relative overflow-hidden">
+    <section id="about" className="py-24 bg-clinic-beige relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -163,7 +172,7 @@ const Intro = () => {
                 개개인의 피부 특성을 심도 있게 분석하여, 가장 자연스럽고 조화로운 결과를 약속드립니다.
               </p>
               <p>
-                순수피부과는 단순한 미용 그 이상의 가치를 지향합니다. 
+                맑음피부과는 단순한 미용 그 이상의 가치를 지향합니다. 
                 피부 건강이 곧 삶의 질을 높이는 시작이라는 믿음으로, 매 순간 진심을 다해 진료하겠습니다.
               </p>
             </div>
@@ -193,8 +202,9 @@ const Intro = () => {
   );
 };
 
-const ServiceCard = ({ icon: Icon, title, description, tags }: any) => (
+const ServiceCard = ({ id, icon: Icon, title, description, tags }: any) => (
   <motion.div 
+    id={id}
     whileHover={{ y: -10 }}
     className="bg-white p-8 group border border-transparent hover:border-clinic-gold/20 transition-all duration-500 rounded-3xl"
   >
@@ -216,22 +226,25 @@ const ServiceCard = ({ icon: Icon, title, description, tags }: any) => (
 const Clinics = () => {
   const services = [
     {
-      icon: Zap,
-      title: "리프팅 & 안티에이징",
-      description: "무너진 얼굴 라인을 되찾아드리는 강력한 탄력 솔루션. 울쎄라, 슈링크, 써마지 등 프리미엄 장비를 사용합니다.",
-      tags: ["울쎄라", "써마지", "슈링크유니버스"]
-    },
-    {
+      id: "acne",
       icon: Stethoscope,
       title: "여드름 & 모공 센터",
       description: "반복되는 여드름의 근본 원인을 해결하고, 넓어진 모공과 흉터를 매끄럽게 복원하는 맞춤형 케어를 제공합니다.",
       tags: ["여드름압출", "LDM", "포텐자"]
     },
     {
+      id: "pigment",
       icon: Sparkles,
       title: "색소 & 화이트닝",
       description: "기미, 주근깨, 잡티 없는 맑고 투명한 피부. 개인별 피부 톤과 색소 깊이를 분석하여 정교한 레이저 셰이핑을 진행합니다.",
       tags: ["피코토닝", "클라리티2", "미백코스"]
+    },
+    {
+      id: "lifting",
+      icon: Zap,
+      title: "리프팅 & 안티에이징",
+      description: "무너진 얼굴 라인을 되찾아드리는 강력한 탄력 솔루션. 울쎄라, 슈링크, 써마지 등 프리미엄 장비를 사용합니다.",
+      tags: ["울쎄라", "써마지", "슈링크유니버스"]
     }
   ];
 
@@ -242,7 +255,7 @@ const Clinics = () => {
           <span className="text-xs font-bold text-clinic-gold tracking-[0.2em] uppercase mb-4 block">Medical Services</span>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">전문화된 진료 시스템</h2>
           <p className="text-clinic-muted max-w-2xl mx-auto">
-            순수피부과만의 숙련된 노하우와 첨단 장비를 바탕으로<br />
+            맑음피부과만의 숙련된 노하우와 첨단 장비를 바탕으로<br />
             가장 효율적인 피부 솔루션을 제안합니다.
           </p>
         </div>
@@ -259,7 +272,7 @@ const Clinics = () => {
 
 const DoctorProfile = () => {
   return (
-    <section className="py-24 bg-clinic-beige overflow-hidden">
+    <section id="doctor" className="py-24 bg-clinic-beige overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div 
@@ -272,7 +285,7 @@ const DoctorProfile = () => {
               REPRESENTATIVE DOCTOR
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              의학박사 <span className="text-clinic-gold">박순수</span> 대표원장
+              의학박사 <span className="text-clinic-gold">박맑음</span> 대표원장
             </h2>
             
             <div className="space-y-8">
@@ -287,7 +300,7 @@ const DoctorProfile = () => {
                   <li>· 대한피부과학회 정회원</li>
                   <li>· 대한레이저학회 창립위원</li>
                   <li>· 前 강남 유명 피부과 원장</li>
-                  <li>· 現 순수피부과 대표원장</li>
+                  <li>· 現 맑음피부과 대표원장</li>
                 </ul>
               </div>
               
@@ -324,7 +337,7 @@ const DoctorProfile = () => {
 
 const MapSection = () => {
   return (
-    <section className="py-24 bg-white">
+    <section id="map" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden rounded-3xl shadow-2xl border border-gray-100">
           <div className="lg:col-span-8 h-[500px] bg-slate-100 relative">
@@ -387,12 +400,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-1">
             <div className="text-2xl font-serif font-bold tracking-tight text-clinic-gold mb-6">
-              순수<span className="text-clinic-dark">피부과</span>
+              맑음<span className="text-clinic-dark">피부과</span>
             </div>
             <p className="text-xs text-clinic-muted leading-loose">
-              대표자 : 박순수 | 사업자번호 : 123-45-67890<br />
-              개인정보책임자 : 박순수 | 의료기관명칭 : 순수피부과의원<br />
-              Copyright ⓒ 2024 PURE DERMATOLOGY CLINIC All Rights Reserved.
+              대표자 : 박맑음 | 사업자번호 : 123-45-67890<br />
+              개인정보책임자 : 박맑음 | 의료기관명칭 : 맑음피부과의원<br />
+              Copyright ⓒ 2024 MAREUM DERMATOLOGY CLINIC All Rights Reserved.
             </p>
           </div>
           
@@ -419,11 +432,11 @@ const Footer = () => {
           
           <div className="text-right flex flex-col items-end">
             <img 
-              src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://순수피부과.com" 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent('https://맑음피부과.com')}`} 
               alt="QR" 
               className="w-24 h-24 mb-4 grayscale opacity-50"
             />
-            <p className="text-[10px] text-clinic-muted text-right">모바일에서 순수피부과를<br />더 편하게 만나보세요.</p>
+            <p className="text-[10px] text-clinic-muted text-right">모바일에서 맑음피부과를<br />더 편하게 만나보세요.</p>
           </div>
         </div>
       </div>
