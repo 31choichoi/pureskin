@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Noto+Sans+KR:wght@100..900&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Noto Sans KR", "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-clinic-beige: #fdfaf5;
+  --color-clinic-gold: #c5a363;
+  --color-clinic-dark: #2c2c2c;
+  --color-clinic-muted: #8e8e8e;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-clinic-dark bg-white antialiased;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
