@@ -44,7 +44,7 @@ const Header = () => {
             <a 
               key={item.id} 
               href={`#${item.id}`} 
-              className="text-sm font-medium hover:text-clinic-gold transition-colors"
+              className="text-base font-semibold hover:text-clinic-gold transition-colors"
             >
               {item.name}
             </a>
